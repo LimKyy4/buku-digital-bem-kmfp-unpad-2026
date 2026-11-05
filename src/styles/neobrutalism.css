@@ -1,0 +1,195 @@
+/**
+ * Utilitas dan Komponen Desain Soft Neo-Brutalism + Digital Scrapbook
+ * Grand Design Biro Keuangan BEM KMFP UNPAD 2026
+ */
+
+/* Hard Solid Offset Shadows */
+.shadow-neo-sm {
+  box-shadow: 2px 2px 0px #2D232E;
+}
+
+.shadow-neo {
+  box-shadow: 3px 3px 0px #2D232E;
+}
+
+.shadow-neo-lg {
+  box-shadow: 4px 4px 0px #2D232E;
+}
+
+.shadow-neo-xl {
+  box-shadow: 6px 6px 0px #2D232E;
+}
+
+/* Neo-Brutalist Interactive Hover */
+.neo-button {
+  border: 2px solid #2D232E;
+  box-shadow: 3px 3px 0px #2D232E;
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.neo-button:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #2D232E;
+}
+
+.neo-button:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px #2D232E;
+}
+
+/* Stiker Tipografi (Typography Sticker) */
+.neo-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  border: 2px solid #2D232E;
+  border-radius: 9999px;
+  box-shadow: 2px 2px 0px #2D232E;
+  padding: 0.25rem 0.85rem;
+  line-height: 1.25;
+}
+
+.neo-sticker-rect {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  border: 2px solid #2D232E;
+  border-radius: 0.75rem;
+  box-shadow: 3px 3px 0px #2D232E;
+  padding: 0.35rem 1rem;
+}
+
+/* Pin Lencana Geometris (Badges) */
+.neo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2D232E;
+  box-shadow: 2px 2px 0px #2D232E;
+  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.neo-badge-circle {
+  border-radius: 9999px;
+}
+
+.neo-badge-pill {
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+}
+
+.neo-badge-octagon {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+/* Washi Tape Geometris */
+.washi-tape {
+  position: absolute;
+  height: 18px;
+  background-color: rgba(255, 218, 193, 0.88);
+  border: 1px dashed rgba(45, 35, 46, 0.45);
+  box-shadow: 1px 1px 2px rgba(45, 35, 46, 0.15);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.washi-tape-mint {
+  background-color: rgba(226, 240, 203, 0.88);
+}
+
+.washi-tape-pink {
+  background-color: rgba(255, 183, 178, 0.88);
+}
+
+.washi-tape-yellow {
+  background-color: rgba(255, 245, 186, 0.88);
+}
+
+/* Tekstur Kertas (Subtle Dot Grid) */
+.paper-texture {
+  background-color: #FFF0F5;
+  background-image: radial-gradient(#2D232E 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Ilusi Lipatan Punggung Buku Fisik Nyata (Book Crease Shadow) */
+.book-crease-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 32px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to right,
+    rgba(45, 35, 46, 0) 0%,
+    rgba(45, 35, 46, 0.12) 35%,
+    rgba(45, 35, 46, 0.22) 50%,
+    rgba(45, 35, 46, 0.12) 65%,
+    rgba(45, 35, 46, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* Neo-Brutalist Memo Card */
+.memo-card {
+  background: #FFFFFF;
+  border: 2px solid #2D232E;
+  border-radius: 1rem;
+  box-shadow: 3px 3px 0px #2D232E;
+  position: relative;
+  overflow: hidden;
+}
+
+.memo-card-pink {
+  background: #FFB7B2;
+}
+
+.memo-card-peach {
+  background: #FFDAC1;
+}
+
+.memo-card-mint {
+  background: #E2F0CB;
+}
+
+.memo-card-yellow {
+  background: #FFF5BA;
+}
+
+.memo-card-lavender {
+  background: #E8D7F5;
+}
+
+.memo-card-blue {
+  background: #C7CEEA;
+}
+
+/* Perforated Ticket Edge */
+.ticket-perforated {
+  position: relative;
+  background-size: 16px 16px;
+}
+
+/* Animasi Ticker Marquee Pemutar Musik */
+@keyframes ticker-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(-35%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.music-ticker-marquee {
+  display: inline-block;
+  animation: ticker-marquee 8s ease-in-out infinite alternate;
+}

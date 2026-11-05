@@ -1,0 +1,104 @@
+MATERI 
+
+
+TASK TO-DO LIST 
+
+### Fase 1: Persiapan dan Ekstraksi Aset
+
+1. **Ekspor Aset Visual dari Canva:**
+* Ekspor 25 halaman slide dalam format PNG resolusi tinggi (1920x1080 piksel) tanpa penurunan kualitas.
+2. **Konversi dan Kompresi Modern Web:**
+* Konversi seluruh file PNG ke format WebP terkompresi (target ukuran 100-200 KB per halaman).
+* Standarisasi penamaan berkas berurutan: `page-01.webp` hingga `page-25.webp`.
+3. **Persiapan Aset Pendukung:**
+* Ekstraksi atau pengadaan efek suara lembaran kertas berdurasi pendek (`page-flip.mp3`, ukuran di bawah 30 KB).
+* Unduh berkas font modern berlisensi terbuka dalam format `.woff2`: *Syne* atau *Clash Display* untuk judul/heading, dan *Plus Jakarta Sans* untuk elemen antarmuka dan navigasi.
+
+### Fase 2: Setup Lingkungan dan Arsitektur Proyek
+
+1. **Inisialisasi Repositori:**
+* Setup proyek baru menggunakan Vite dengan template Vanilla TypeScript.
+* Instalasi Tailwind CSS untuk tata letak antarmuka responsif.
+* Instalasi library engine buku: `page-flip` (StPageFlip).
+2. **Penyusunan Struktur Berkas Modular:**
+* Pengelompokan direktori:
+* `public/assets/images/pages/` (aset lembaran)
+* `public/assets/audio/` (suara lembaran)
+* `src/config/` (konfigurasi dimensi dan data halaman)
+* `src/core/` (engine flipbook, audio, dan responsive manager)
+* `src/components/` (toolbar, daftar isi modal, hotspot link, preloader)
+* `src/styles/` (tipografi dan utility layout)
+3. **Konfigurasi SEO dan Meta Tag:**
+* Konfigurasi metadata lengkap pada `index.html`: Open Graph tags, Twitter Card preview, deskripsi meta, favicon organisasi, dan viewport tag khusus web app.
+
+### Fase 3: Pemodelan Data dan Pemetaan Interaktivitas
+
+1. **Penyusunan `pagesData.ts`:**
+* Pendataan nomor indeks seluruh 25 halaman beserta label bab untuk navigasi cepat:
+* Bab 1: Cover dan Profil Pimpinan/Staf (Halaman 1–3)
+* Bab 2: Fondasi Organisasi, Visi Misi, Golden Circle, SWOT (Halaman 4–11)
+* Bab 3: Program Kerja Utama (Halaman 12–14, 21)
+* Bab 4: Regulasi, Alur SIAT, Permohonan Dana, Reimburse, Pinjaman (Halaman 15–20)
+* Bab 5: Master Data, Template RAB, dan Penutup (Halaman 22–25)
+2. **Pemetaan Layer Hotspot Tautan:**
+* Definisi koordinat area klik untuk Halaman 22: tautan eksternal menuju `[https://bit.ly/MASTERDATABIROKEUANGAN](https://bit.ly/MASTERDATABIROKEUANGAN)`.
+* Definisi koordinat area klik untuk Halaman 23: tautan unduhan Template RAB.
+
+### Fase 4: Pengembangan Engine Inti (*Core Engine*)
+
+1. **Implementasi `FlipbookEngine.ts`:**
+* Inisialisasi StPageFlip dengan parameter rasio 16:9, rendering canvas berbasis GPU acceleration, bayangan realistis (*realistic shadows*), dan penyesuaian sudut lipatan (*curl limit*).
+* Event listener sinkronisasi nomor halaman aktif dengan komponen UI eksternal.
+2. **Implementasi `ResponsiveManager.ts`:**
+* Logika deteksi resolusi viewport:
+* Desktop / Laptop (lebar > 768px): Mode tampilan 2 halaman berdampingan (*two-page spread*).
+* Ponsel / Tablet Vertikal (lebar <= 768px): Mode tampilan 1 halaman terpusat (*single page mode*).
+3. **Implementasi `AudioController.ts`:**
+* Mekanisme audio pooling agar suara perpindahan halaman tidak putus saat dibalik cepat.
+* Kontrol mute audio dengan penyimpanan status preferensi pengguna di LocalStorage.
+
+### Fase 5: Pengembangan Komponen Antarmuka Pengguna
+
+1. **Toolbar Navigasi Mengambang (`Controls.ts`):**
+* Tombol Previous dan Next dengan transisi halus.
+* Tombol Toggle Fullscreen dengan fallback API browser.
+* Tombol Toggle Audio (suara aktif / bisu).
+* Indikator nomor halaman aktif (contoh format: `Halaman 4-5 dari 25`).
+2. **Drawer / Modal Daftar Isi (`TableOfContents.ts`):**
+* Menu pop-up minimalis yang memungkinkan pengguna melompat langsung ke halaman yang dipilih dalam 1 klik.
+3. **Lapisan Tautan Interaktif (`Hotspots.ts`):**
+* Pembuatan overlay transparan di atas halaman canvas untuk area QR code dan tautan, dengan efek hover halus penanda elemen interaktif.
+4. **Indikator Pemuatan Awal (`Preloader.ts`):**
+* Layar transisi minimalis yang memastikan aset halaman pertama telah ter-cache sebelum buku dapat dibuka.
+
+### Fase 6: Optimasi Kinerja, Aksesibilitas, dan Audit Teknis
+
+1. **Optimasi Kinerja Render:**
+* Penerapan sistem lazy loading untuk halaman-halaman tengah (buffer halaman yang aktif dan dua halaman di sekitarnya saja).
+* Verifikasi performa 60 FPS pada gesture swipe di perangkat mobile.
+2. **Audit Kualitas Kode dan Build:**
+* Penghapusan kode CSS/JS yang tidak terpakai melalui proses bundling Vite.
+* Verifikasi skor Lighthouse: Accessibility > 90, Performance > 95, SEO = 100.
+3. **Uji Lintas Peramban (*Cross-Browser Testing*):**
+* Pengujian kelancaran fungsi di Google Chrome, Apple Safari (iOS & macOS), Mozilla Firefox, dan Microsoft Edge.
+
+
+### Fase 7: Deployment dan Penyerahan ke Klien
+
+1. **Eksekusi Build Produksi:**
+* Kompilasi berkas statis teroptimasi (`dist/`).
+2. **Deployment ke Cloud Hosting:**
+* Hosting berkas statis pada Cloudflare Pages, Vercel, atau GitHub Pages dengan konfigurasi domain kustom jika dibutuhkan.
+3. **Penyusunan Dokumentasi Penggunaan:**
+* Catatan singkat cara memperbarui link QR code atau mengganti gambar halaman di masa mendatang.
+
+
+
+oke, kita anggap bacth 1 sudah selesai ( fase 1 - fase 7 ). dan jujur saja ini masih jauh dari ekspektasi client saya. rencana perbaikan :
+
+	- suruh antigravity jangan berpacu kepada ui-ux yang lama. kita akan membuat ui-ux yang 100% baru. mulai dari pallete color yang diubah, 
+	  layout diubah, tata letak yang diubah, komponen yang diubah.
+	- kita akan merapihkan tulisan yang berantakan atau tulisan yang keluar keluar dari card nya.
+	- 
+	  
+

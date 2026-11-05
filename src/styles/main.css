@@ -1,0 +1,280 @@
+@import './fonts.css';
+@import './typography.css';
+@import './neobrutalism.css';
+@import './tailwind.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --dream-canvas: #FFF0F5;
+    --dream-dark: #2D232E;
+    --dream-pink: #FFB7B2;
+    --dream-peach: #FFDAC1;
+    --dream-mint: #E2F0CB;
+    --dream-yellow: #FFF5BA;
+    --dream-lavender: #E8D7F5;
+    --dream-blue: #C7CEEA;
+    --dream-white: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  html, body {
+    height: 100%;
+    max-height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden !important;
+    overscroll-behavior: none;
+  }
+
+  body {
+    background-color: var(--dream-canvas);
+    background-image:
+      radial-gradient(circle, rgba(45, 35, 46, 0.08) 1.2px, transparent 1.2px),
+      linear-gradient(135deg, #FFF0F5 0%, #FFF5BA 40%, #FFDAC1 80%, #E8D7F5 100%);
+    background-size: 24px 24px, 100% 100%;
+    background-attachment: fixed;
+    color: var(--dream-dark);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.4s ease;
+  }
+
+  /* Mode Fullscreen Imersif: Background Canvas Terfokus */
+  body.is-fullscreen {
+    background-image:
+      radial-gradient(circle, rgba(45, 35, 46, 0.06) 1.2px, transparent 1.2px),
+      radial-gradient(ellipse 80% 70% at 50% 50%, #FFF8FA 0%, #FCE8EE 70%, #F5D3DD 100%);
+    background-size: 24px 24px, 100% 100%;
+  }
+
+  /* Indikator Fokus Keyboard WCAG AA Neo-Brutalis */
+  :focus-visible {
+    outline: 2px solid var(--dream-dark);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Kontainer Utama Panggung Buku Digital */
+  .book-stage-wrapper {
+    @apply relative flex items-center justify-center w-full h-full overflow-hidden;
+    contain: layout size;
+    perspective: 2500px;
+    -webkit-perspective: 2500px;
+    -moz-perspective: 2500px;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Kontainer StPageFlip dengan Akselerasi Perangkat Keras GPU 60 FPS & Hard Solid Shadow */
+  .st-flipbook-container {
+    @apply relative mx-auto my-auto rounded-2xl overflow-hidden;
+    border: 2px solid var(--dream-dark);
+    box-shadow: 4px 4px 0px #2D232E;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Bayangan Solid Saat Fullscreen */
+  body.is-fullscreen .st-flipbook-container {
+    box-shadow: 6px 6px 0px #2D232E;
+  }
+
+  .st-flipbook-container canvas {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Dukungan StPageFlip HTML Pages Mode */
+  .stf__parent {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    touch-action: pan-y;
+  }
+
+  .stf__wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .stf__block {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    perspective: 2000px;
+    -webkit-perspective: 2000px;
+  }
+
+  .stf__item {
+    display: none;
+    position: absolute;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  .stf__outerShadow,
+  .stf__innerShadow,
+  .stf__hardShadow,
+  .stf__hardInnerShadow {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .st-page {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--dream-canvas);
+    box-sizing: border-box;
+  }
+
+  .st-page img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Lapisan Hotspot Interaktif */
+  .hotspot-overlay-layer {
+    @apply absolute inset-0 pointer-events-none z-20;
+  }
+
+  .interactive-hotspot {
+    @apply absolute pointer-events-auto cursor-pointer rounded-xl transition-all duration-150;
+    background: rgba(255, 183, 178, 0.28);
+    border: 2px dashed #2D232E;
+  }
+
+  .interactive-hotspot:hover {
+    background: rgba(255, 245, 186, 0.65);
+    border: 2px solid #2D232E;
+    box-shadow: 3px 3px 0px #2D232E;
+    transform: translate(-1px, -1px);
+  }
+
+  /* Floating Edge Navigation Buttons (Panah Sisi Buku Neo-Brutalis) */
+  .floating-edge-nav {
+    @apply absolute top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-dream-dark transition-all duration-200 cursor-pointer;
+    border: 2px solid #2D232E;
+    box-shadow: 3px 3px 0px #2D232E;
+  }
+
+  #edge-prev {
+    background-color: #E2F0CB;
+  }
+
+  #edge-prev:hover:not(:disabled) {
+    background-color: #FFF5BA;
+    transform: translateY(-50%) translate(2px, 2px);
+    box-shadow: 1px 1px 0px #2D232E;
+  }
+
+  #edge-next {
+    background-color: #FFDAC1;
+  }
+
+  #edge-next:hover:not(:disabled) {
+    background-color: #FFB7B2;
+    transform: translateY(-50%) translate(2px, 2px);
+    box-shadow: 1px 1px 0px #2D232E;
+  }
+
+  .floating-edge-nav:active:not(:disabled) {
+    transform: translateY(-50%) translate(3px, 3px);
+    box-shadow: 0px 0px 0px #2D232E;
+  }
+
+  .floating-edge-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+  }
+
+  /* Kustom Scrollbar Laci Daftar Isi (Terisolasi) */
+  .toc-content {
+    scrollbar-width: thin;
+    scrollbar-color: #FFB7B2 #FFF0F5;
+  }
+
+  .toc-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .toc-content::-webkit-scrollbar-track {
+    background: #FFF0F5;
+  }
+
+  .toc-content::-webkit-scrollbar-thumb {
+    background-color: #FFB7B2;
+    border-radius: 9999px;
+    border: 1px solid #2D232E;
+  }
+
+  .toc-content::-webkit-scrollbar-thumb:hover {
+    background-color: #FFDAC1;
+  }
+
+  /* Dock Toolbar Floating Neo-Brutalis */
+  .neo-dock {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 2px solid #2D232E;
+    box-shadow: 4px 4px 0px #2D232E;
+  }
+
+  /* Transisi Auto-Hide Floating Dock */
+  .dock-transition {
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dock-hidden {
+    opacity: 0 !important;
+    transform: translate(-50%, 28px) scale(0.96) !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Utilitas Screen Reader */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

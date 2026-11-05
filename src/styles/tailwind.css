@@ -1,0 +1,74 @@
+/* Kustomisasi Utility Classes, Variables, dan Neo-Brutalism Shadows */
+/* Grand Design Biro Keuangan BEM KMFP UNPAD 2026 */
+
+:root {
+  --color-canvas: #FFF0F5;
+  --color-ink: #2D232E;
+  --color-pink: #FFB7B2;
+  --color-peach: #FFDAC1;
+  --color-mint: #E2F0CB;
+  --color-yellow: #FFF5BA;
+  --color-lavender: #E8D7F5;
+  --color-blue: #C7CEEA;
+  --color-white: #FFFFFF;
+}
+
+/* Hard Drop Shadow Utilities (Soft Neo-Brutalism) */
+.shadow-neo-2 {
+  box-shadow: 2px 2px 0px 0px #2D232E;
+}
+
+.shadow-neo-3 {
+  box-shadow: 3px 3px 0px 0px #2D232E;
+}
+
+.shadow-neo-4 {
+  box-shadow: 4px 4px 0px 0px #2D232E;
+}
+
+.shadow-neo-5 {
+  box-shadow: 5px 5px 0px 0px #2D232E;
+}
+
+.shadow-neo-6 {
+  box-shadow: 6px 6px 0px 0px #2D232E;
+}
+
+/* Washi Tape Jagged Edge Effects */
+.washi-jagged-h {
+  background-size: 16px 100%;
+  mask-image: radial-gradient(circle at 10px 0, transparent 0, transparent 4px, black 5px);
+  -webkit-mask-image: radial-gradient(circle at 10px 0, transparent 0, transparent 4px, black 5px);
+}
+
+/* Y2K Sparkle Animation */
+@keyframes sparkle-twinkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.18) rotate(15deg);
+    opacity: 1;
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle-twinkle 2.5s ease-in-out infinite;
+}
+
+/* Micro-interaction Spring Hover */
+.neo-card-spring {
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.neo-card-spring:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 6px 6px 0px 0px #2D232E;
+}
+
+.neo-card-spring:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: 2px 2px 0px 0px #2D232E;
+}

@@ -1,0 +1,47 @@
+/* Definisi Tipografi Resmi Pop Magazine & Y2K Cute Digital Scrapbook */
+/* Biro Keuangan BEM KMFP UNPAD 2026 */
+
+/* Web Fonts Import: Unbounded, Fredoka, Mali */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Mali:ital,wght@0,600;0,700&family=Unbounded:wght@700;800;900&display=swap');
+
+/* Font Display / Judul Utama: Syne Lokal WOFF2 */
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/syne-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/assets/fonts/syne-800.woff2') format('woff2');
+}
+
+/* Font Body / Konten Dokumen: Plus Jakarta Sans Lokal WOFF2 */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-600.woff2') format('woff2');
+}
