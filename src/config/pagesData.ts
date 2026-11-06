@@ -132,7 +132,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 2,
     title: 'Jajaran Staf',
     subtitle: 'Struktur dan Anggota Biro Keuangan 2026',
-    imagePath: './assets/halaman/halaman-staff-biro-baru.jfif',
+    imagePath: './assets/halaman/halaman-staff-biro-new.jfif',
     pageType: 'content',
     chapterId: 'bagian-1',
     chapterTitle: 'Bagian I: Profil Organisasi',
