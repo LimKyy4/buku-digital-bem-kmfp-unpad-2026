@@ -357,7 +357,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 17,
     title: 'Alur Permohonan Dana',
     subtitle: 'Diagram Alur Permohonan Dana Internal Organisasi',
-    imagePath: './assets/halaman/halaman-alur-permohonan-dana.jfif',
+    imagePath: './assets/halaman/halaman-alur-permohonan-dana-baru.jfif',
     pageType: 'content',
     chapterId: 'bagian-4',
     chapterTitle: 'Bagian IV: Regulasi, Berkas, & Alur Keuangan',
