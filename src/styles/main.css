@@ -80,6 +80,11 @@
     transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Pembungkus Stage Kanvas Buku Berbasis Rasio Terkunci */
+  .book-stage-container {
+    @apply relative flex items-center justify-center max-w-full max-h-full;
+  }
+
   /* Kontainer StPageFlip dengan Akselerasi Perangkat Keras GPU 60 FPS & Hard Solid Shadow */
   .st-flipbook-container {
     @apply relative mx-auto my-auto rounded-2xl overflow-hidden;
@@ -91,11 +96,15 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     transition: box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 4 / 3;
   }
 
-  /* Bayangan Solid Saat Fullscreen */
+  /* Bayangan Solid & Rasio 8:3 (Dua Halaman 4:3) Saat Fullscreen */
   body.is-fullscreen .st-flipbook-container {
     box-shadow: 6px 6px 0px #2D232E;
+    aspect-ratio: 8 / 3;
   }
 
   .st-flipbook-container canvas {
@@ -166,6 +175,11 @@
   /* Lapisan Hotspot Interaktif */
   .hotspot-overlay-layer {
     @apply absolute inset-0 pointer-events-none z-20;
+  }
+
+  /* Lapisan Penomoran Halaman Luar (Melayang di Luar Bingkai Lembaran 4:3) */
+  .page-numbers-overlay-layer {
+    @apply absolute inset-0 pointer-events-none z-20 overflow-visible;
   }
 
   .interactive-hotspot {

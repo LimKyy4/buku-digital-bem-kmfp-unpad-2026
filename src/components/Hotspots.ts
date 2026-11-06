@@ -1,5 +1,5 @@
 import type { HotspotItem, ViewportMode } from '../types';
-import { getHotspotsForPage } from '../config/pagesData';
+import { getHotspotsForPage, getTotalPages } from '../config/pagesData';
 
 /**
  * Komponen Lapisan Interaktif Titik Tautan (Hotspots Layer)
@@ -52,8 +52,8 @@ export class Hotspots {
     for (const page of visiblePages) {
       const hotspotsOnPage = getHotspotsForPage(page);
       for (const h of hotspotsOnPage) {
-        const isLeftPage = displayMode === 'spread' && page > 1 && page < 24 && page % 2 === 0;
-        const isRightPage = displayMode === 'spread' && page > 1 && page < 24 && page % 2 !== 0;
+        const isLeftPage = displayMode === 'spread' && page > 1 && page % 2 === 0;
+        const isRightPage = displayMode === 'spread' && page > 1 && page % 2 !== 0;
         activeHotspots.push({ hotspot: h, isLeftPage, isRightPage });
       }
     }
@@ -75,12 +75,13 @@ export class Hotspots {
    * Menentukan halaman mana saja yang tampak di layar (1 halaman untuk sampul/mobile, 2 halaman untuk spread)
    */
   private resolveVisiblePages(pageNumber: number, displayMode: ViewportMode): number[] {
-    if (displayMode === 'single' || pageNumber === 1 || pageNumber === 24) {
+    const totalPages = getTotalPages();
+    if (displayMode === 'single' || pageNumber === 1 || (totalPages % 2 === 0 && pageNumber === totalPages)) {
       return [pageNumber];
     }
     const leftPage = pageNumber % 2 === 0 ? pageNumber : pageNumber - 1;
     const rightPage = leftPage + 1;
-    return [leftPage, rightPage].filter(p => p >= 1 && p <= 24);
+    return [leftPage, rightPage].filter(p => p >= 1 && p <= totalPages);
   }
 
   /**

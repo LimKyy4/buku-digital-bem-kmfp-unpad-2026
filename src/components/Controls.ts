@@ -1,4 +1,5 @@
 import type { ViewportMode } from '../types';
+import { getTotalPages } from '../config/pagesData';
 
 /**
  * Komponen Bilah Kontrol Bawah Kapsul Melayang Terpusat (Centered Floating Pill Toolbar Footer)
@@ -101,12 +102,12 @@ export class Controls {
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
           </svg>
-          <span id="ctrl-page-indicator" class="whitespace-nowrap font-sans font-extrabold">Halaman 1 dari 24</span>
+          <span id="ctrl-page-indicator" class="whitespace-nowrap font-sans font-extrabold">Halaman 1 dari ${getTotalPages()}</span>
           <input
             id="ctrl-page-input"
             type="number"
             min="1"
-            max="24"
+            max="${getTotalPages()}"
             value="1"
             class="hidden w-10 h-5 text-center bg-white border border-dream-dark rounded text-dream-dark font-extrabold text-xs focus:outline-none"
             aria-label="Lompat ke Nomor Halaman"
@@ -230,7 +231,7 @@ export class Controls {
     if (mode === 'spread') {
       if (currentPage === 1) {
         this.pageIndicatorLabel.textContent = `Halaman 1 dari ${totalPages}`;
-      } else if (currentPage >= totalPages) {
+      } else if (totalPages % 2 === 0 && currentPage >= totalPages) {
         this.pageIndicatorLabel.textContent = `Halaman ${totalPages} dari ${totalPages}`;
       } else {
         const leftPage = currentPage % 2 === 0 ? currentPage : currentPage - 1;
@@ -238,7 +239,7 @@ export class Controls {
         this.pageIndicatorLabel.textContent = `Halaman ${leftPage}–${rightPage} dari ${totalPages}`;
       }
     } else {
-      // Mode Biasa / Single Page Mode: Halaman X dari 24
+      // Mode Biasa / Single Page Mode: Halaman X dari totalPages
       this.pageIndicatorLabel.textContent = `Halaman ${currentPage} dari ${totalPages}`;
     }
 

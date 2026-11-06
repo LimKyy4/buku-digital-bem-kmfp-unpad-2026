@@ -93,14 +93,15 @@ assert(responsiveContent.includes('detectIsFullscreen'), 'ResponsiveManager mend
 assert(responsiveContent.includes("return 'single'"), 'ResponsiveManager mengembalikan Single Page Mode saat windowed/biasa.');
 assert(responsiveContent.includes("return isNarrowScreen ? 'single' : 'spread'"), 'ResponsiveManager mengembalikan Two-Page Spread saat fullscreen.');
 
-// 7. Pemanis Scrapbook & Penomoran Halaman (Hal. 01 - Hal. 24)
+// 7. Pemanis Scrapbook & Penomoran Halaman (23 Halaman Resmi)
 const flipbookPath = path.join(projectRoot, 'src/core/FlipbookEngine.ts');
 assert(fs.existsSync(flipbookPath), 'File src/core/FlipbookEngine.ts ada.');
 const flipbookContent = fs.readFileSync(flipbookPath, 'utf8');
-assert(flipbookContent.includes('washiTape') || flipbookContent.includes('washi-tape'), 'FlipbookEngine memuat aksen selotip kertas washi tape scrapbook.');
-assert(flipbookContent.includes('BEM KMFP UNPAD • OFFICIAL BLUEPRINT'), 'FlipbookEngine memuat cap stempel digital resmi.');
 assert(flipbookContent.includes('spineCrease'), 'FlipbookEngine memuat garis lipatan buku tengah (spine crease).');
-assert(flipbookContent.includes('Hal. ${paddedNum}') || flipbookContent.includes('Hal. 01') || flipbookContent.includes('pageNumberPin'), 'FlipbookEngine menyematkan stiker penomoran halaman (Hal. 01 s/d Hal. 24).');
+const externalNumbersPath = path.join(projectRoot, 'src/components/ExternalPageNumbers.ts');
+const hasExternalNumbers = fs.existsSync(externalNumbersPath);
+assert(flipbookContent.includes('Hal. 01') || hasExternalNumbers, 'Sistem menyematkan stiker penomoran halaman luar.');
+assert(hasExternalNumbers, 'File src/components/ExternalPageNumbers.ts ada.');
 
 // 8. Eliminasi Mutlak Scrollbar (Zero Downward Scroll)
 const indexPath = path.join(projectRoot, 'index.html');
@@ -117,6 +118,7 @@ const checkedFiles = [
   'src/components/Navbar.ts',
   'src/components/TableOfContents.ts',
   'src/components/Controls.ts',
+  'src/components/ExternalPageNumbers.ts',
   'src/components/MusicPlayer.ts',
   'src/core/MusicController.ts',
   'src/core/ResponsiveManager.ts',

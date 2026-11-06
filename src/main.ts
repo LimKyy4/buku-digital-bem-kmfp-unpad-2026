@@ -12,8 +12,9 @@ import { Controls } from './components/Controls';
 import { MusicPlayer } from './components/MusicPlayer';
 import { TableOfContents } from './components/TableOfContents';
 import { Hotspots } from './components/Hotspots';
+import { ExternalPageNumbers } from './components/ExternalPageNumbers';
 import { Preloader } from './components/Preloader';
-import type { StageBoundsResult, ViewportMode } from './types';
+import type { ViewportMode } from './types';
 
 /**
  * Orchestrator Utama Aplikasi Buku Digital
@@ -42,6 +43,7 @@ class DigitalBookApp {
   private musicPlayer: MusicPlayer;
   private toc: TableOfContents;
   private hotspots: Hotspots;
+  private externalPageNumbers: ExternalPageNumbers;
 
   constructor() {
     const imageUrls = pagesData.map(p => p.imagePath);
@@ -58,6 +60,7 @@ class DigitalBookApp {
     this.musicPlayer = new MusicPlayer(this.musicController, 'music-player-container');
     this.toc = new TableOfContents('toc-container');
     this.hotspots = new Hotspots('hotspots-layer');
+    this.externalPageNumbers = new ExternalPageNumbers('page-numbers-layer', getTotalPages());
   }
 
   /**
@@ -105,15 +108,11 @@ class DigitalBookApp {
 
       // Sinkronisasi status awal antarmuka pengguna
       const initialPageNumber = this.flipbookEngine.getCurrentPageNumber();
-      const currentMode = this.responsiveManager.getMode();
-
-      this.controls.updatePage(initialPageNumber, totalPages, currentMode);
       this.controls.updateAudio(this.audioController.isMuted());
       this.toc.updateActivePage(initialPageNumber);
 
-      // Sinkronisasi ukuran awal lapisan hotspot
-      this.hotspots.syncBounds(bookContainer);
-      this.hotspots.renderForPage(initialPageNumber, currentMode);
+      // Kunci dan sinkronisasi dimensi panggung buku secara presisi sejak awal
+      this.syncDimensions();
 
       // Siarkan posisi awal ke pembaca layar
       const coverPage = getPageByNumber(1);
@@ -123,6 +122,22 @@ class DigitalBookApp {
 
       this.preloader.updateProgress(100, 'Aplikasi siap digunakan.');
       await this.preloader.hide();
+
+      // Penanganan timing & cache render: eksekusi sinkronisasi pasca-preloader
+      this.syncDimensions();
+
+      window.requestAnimationFrame(() => {
+        this.syncDimensions();
+        window.dispatchEvent(new Event('resize'));
+      });
+
+      window.setTimeout(() => {
+        this.syncDimensions();
+      }, 60);
+
+      window.setTimeout(() => {
+        this.syncDimensions();
+      }, 150);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : String(err);
       console.error('[DigitalBookApp] Gagal menginisialisasi buku digital:', errorMessage);
@@ -159,7 +174,6 @@ class DigitalBookApp {
   private setupEventWiring(): void {
     const totalPages = getTotalPages();
     const bookContainer = document.getElementById('book-container');
-    const stageWrapper = document.getElementById('book-stage-wrapper');
 
     // 1. Sinkronisasi Pergantian Halaman FlipbookEngine
     this.flipbookEngine.onPageChange((pageIndex: number, pageNumber: number) => {
@@ -177,11 +191,13 @@ class DigitalBookApp {
       // Sinkronisasi sorotan bab aktif di drawer daftar isi
       this.toc.updateActivePage(pageNumber);
 
-      // Render ulang lapisan interaktif hotspot untuk halaman aktif
+      // Render ulang lapisan interaktif hotspot dan penomoran luar untuk halaman aktif
       if (bookContainer) {
         this.hotspots.syncBounds(bookContainer);
+        this.externalPageNumbers.syncBounds(bookContainer);
       }
       this.hotspots.renderForPage(pageNumber, currentMode);
+      this.externalPageNumbers.renderForPage(pageNumber, currentMode);
 
       // Siarkan posisi halaman terkini ke pembaca layar
       this.announcePageChange(pageNumber, totalPages, currentMode);
@@ -228,34 +244,12 @@ class DigitalBookApp {
     });
 
     // 6. Adaptasi Tata Letak Viewport (Windowed Single vs Fullscreen Spread)
-    this.responsiveManager.onModeChange((mode: ViewportMode) => {
-      if (stageWrapper && bookContainer) {
-        const bounds = this.responsiveManager.calculateStageBounds(stageWrapper);
-        bookContainer.style.width = `${bounds.width}px`;
-        bookContainer.style.height = `${bounds.height}px`;
-      }
-      this.flipbookEngine.update();
-      const currentPage = this.flipbookEngine.getCurrentPageNumber();
-      this.controls.updatePage(currentPage, totalPages, mode);
-      if (bookContainer) {
-        this.hotspots.syncBounds(bookContainer);
-      }
-      this.hotspots.renderForPage(currentPage, mode);
+    this.responsiveManager.onModeChange(() => {
+      this.syncDimensions();
     });
 
-    this.responsiveManager.onResize((bounds: StageBoundsResult) => {
-      if (bookContainer) {
-        bookContainer.style.width = `${bounds.width}px`;
-        bookContainer.style.height = `${bounds.height}px`;
-      }
-      this.flipbookEngine.update();
-      const currentPage = this.flipbookEngine.getCurrentPageNumber();
-      const currentMode = this.responsiveManager.getMode();
-      this.controls.updatePage(currentPage, totalPages, currentMode);
-      if (bookContainer) {
-        this.hotspots.syncBounds(bookContainer);
-      }
-      this.hotspots.renderForPage(currentPage, currentMode);
+    this.responsiveManager.onResize(() => {
+      this.syncDimensions();
     });
 
     // 7. Sinkronisasi Perubahan Layar Penuh (Windowed vs Fullscreen)
@@ -264,19 +258,13 @@ class DigitalBookApp {
       this.navbar.updateFullscreen(isFs);
       this.controls.updateFullscreen(isFs);
 
-      setTimeout(() => {
-        if (stageWrapper && bookContainer) {
-          const bounds = this.responsiveManager.calculateStageBounds(stageWrapper);
-          bookContainer.style.width = `${bounds.width}px`;
-          bookContainer.style.height = `${bounds.height}px`;
-          this.flipbookEngine.update();
-          this.hotspots.syncBounds(bookContainer);
-          const currentPage = this.flipbookEngine.getCurrentPageNumber();
-          const currentMode = this.responsiveManager.getMode();
-          this.controls.updatePage(currentPage, totalPages, currentMode);
-          this.hotspots.renderForPage(currentPage, currentMode);
-        }
-      }, 100);
+      this.syncDimensions();
+      window.setTimeout(() => {
+        this.syncDimensions();
+      }, 50);
+      window.setTimeout(() => {
+        this.syncDimensions();
+      }, 150);
     };
 
     document.addEventListener('fullscreenchange', handleFullscreenSync);
@@ -338,6 +326,32 @@ class DigitalBookApp {
     });
   }
 
+  /**
+   * Menyelaraskan dan mengunci dimensi kontainer buku berbasis rasio 4:3
+   * Menjamin sinkronisasi identik dan presisi antara first load, resize, dan toggle fullscreen
+   */
+  public syncDimensions(): void {
+    const bookContainer = document.getElementById('book-container');
+    const stageWrapper = document.getElementById('book-stage-wrapper');
+    if (!bookContainer || !stageWrapper) return;
+
+    const bounds = this.responsiveManager.calculateStageBounds(stageWrapper);
+    bookContainer.style.width = `${bounds.width}px`;
+    bookContainer.style.height = `${bounds.height}px`;
+
+    this.flipbookEngine.update();
+
+    const currentPage = this.flipbookEngine.getCurrentPageNumber();
+    const currentMode = this.responsiveManager.getMode();
+    const totalPages = getTotalPages();
+
+    this.controls.updatePage(currentPage, totalPages, currentMode);
+    this.hotspots.syncBounds(bookContainer);
+    this.externalPageNumbers.syncBounds(bookContainer);
+    this.hotspots.renderForPage(currentPage, currentMode);
+    this.externalPageNumbers.renderForPage(currentPage, currentMode);
+  }
+
   public getMusicPlayer(): MusicPlayer {
     return this.musicPlayer;
   }
@@ -365,4 +379,14 @@ document.addEventListener('DOMContentLoaded', () => {
   app.start().catch((err: unknown) => {
     console.error('[DigitalBookApp] Unhandled boot error:', err);
   });
+
+  // Eksekusi pembaruan ulang saat seluruh sumber daya jendela tuntas dimuat
+  window.addEventListener(
+    'load',
+    () => {
+      app.syncDimensions();
+      window.dispatchEvent(new Event('resize'));
+    },
+    { once: true }
+  );
 });

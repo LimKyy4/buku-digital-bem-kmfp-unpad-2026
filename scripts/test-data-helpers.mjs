@@ -38,21 +38,21 @@ async function testHelpers() {
   } = pagesModule;
 
   // 1. Total Pages
-  if (getTotalPages() !== 24) {
-    throw new Error(`Total halaman bukan 24, melainkan ${getTotalPages()}`);
+  if (getTotalPages() !== 23) {
+    throw new Error(`Total halaman bukan 23, melainkan ${getTotalPages()}`);
   }
-  console.log('[PASS] getTotalPages() mengembalikan tepat 24 halaman.');
+  console.log('[PASS] getTotalPages() mengembalikan tepat 23 halaman.');
 
   // 2. getPageByNumber
   const p1 = getPageByNumber(1);
   if (!p1 || !p1.title.includes('Cover') || p1.pageType !== 'front-cover') {
     throw new Error('Halaman 1 tidak valid');
   }
-  const p24 = getPageByNumber(24);
-  if (!p24 || !p24.title.includes('Penutup') || p24.pageType !== 'back-cover') {
-    throw new Error('Halaman 24 tidak valid');
+  const p23 = getPageByNumber(23);
+  if (!p23 || !p23.title.includes('Penutup') || p23.pageType !== 'back-cover') {
+    throw new Error('Halaman 23 tidak valid');
   }
-  console.log('[PASS] getPageByNumber(1) dan getPageByNumber(24) valid.');
+  console.log('[PASS] getPageByNumber(1) dan getPageByNumber(23) valid.');
 
   // 3. getPageByIndex
   const pIndex0 = getPageByIndex(0);
@@ -88,14 +88,10 @@ async function testHelpers() {
 
   // 7. getHotspotsForPage
   const hotspotsP22 = getHotspotsForPage(22);
-  if (hotspotsP22.length !== 1 || hotspotsP22[0].targetUrl !== 'https://bit.ly/MASTERDATABIROKEUANGAN' || hotspotsP22[0].interactionType !== 'external-tab') {
+  if (hotspotsP22.length !== 1 || hotspotsP22[0].targetUrl !== 'https://bit.ly/TEMPLATERABBEMKMFP26' || hotspotsP22[0].interactionType !== 'download') {
     throw new Error('Hotspot Halaman 22 tidak valid');
   }
-  const hotspotsP23 = getHotspotsForPage(23);
-  if (hotspotsP23.length !== 1 || hotspotsP23[0].interactionType !== 'download') {
-    throw new Error('Hotspot Halaman 23 tidak valid');
-  }
-  console.log('[PASS] getHotspotsForPage(22) dan getHotspotsForPage(23) valid.');
+  console.log('[PASS] getHotspotsForPage(22) valid.');
 
   // 8. getChapterNavigationList
   const navList = getChapterNavigationList();

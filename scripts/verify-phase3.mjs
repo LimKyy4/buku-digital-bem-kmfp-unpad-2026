@@ -36,7 +36,7 @@ assert(indexHtml.includes('property="og:image"'), 'index.html memuat og:image');
 assert(indexHtml.includes('name="twitter:card" content="summary_large_image"'), 'index.html memuat twitter:card summary_large_image');
 assert(indexHtml.includes('/assets/fonts/syne-700.woff2'), 'index.html memuat link preload untuk font Syne');
 assert(indexHtml.includes('/assets/fonts/plus-jakarta-sans-400.woff2'), 'index.html memuat link preload untuk font Plus Jakarta Sans');
-assert(indexHtml.includes('halaman-cover.jfif') || indexHtml.includes('/assets/images/pages/page-01.webp'), 'index.html memuat link preload untuk cover');
+assert(indexHtml.includes('halaman-cover-utama.jfif') || indexHtml.includes('halaman-cover.jfif') || indexHtml.includes('/assets/images/pages/page-01.webp'), 'index.html memuat link preload untuk cover');
 assert(indexHtml.includes('id="preloader"'), 'index.html memuat kontainer #preloader');
 assert(indexHtml.includes('id="book-container"'), 'index.html memuat kontainer #book-container');
 assert(indexHtml.includes('id="hotspots-layer"'), 'index.html memuat kontainer #hotspots-layer');

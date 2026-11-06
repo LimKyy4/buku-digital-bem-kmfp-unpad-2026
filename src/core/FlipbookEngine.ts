@@ -17,8 +17,8 @@ export type InitCallback = (initData: { page: number; mode: PageOrientation }) =
  * Grand Design Biro Keuangan BEM KMFP UNPAD 2026
  *
  * Mengelola siklus hidup rendering buku berasio 4:3, akselerasi GPU 60 FPS,
- * dekorasi scrapbook (washi tape pastel, stempel resmi, garis lipatan tengah/spine crease),
- * dan stiker penomoran halaman otomatis (Hal. 01 - Hal. 24) di pojok kiri bawah.
+ * serta dekorasi scrapbook (washi tape pastel, stempel resmi, garis lipatan tengah/spine crease).
+ * Penomoran halaman (Hal. 01 - Hal. 24) dikelola di luar kanvas lembaran via ExternalPageNumbers.
  */
 export class FlipbookEngine {
   private pageFlipInstance: PageFlip | null = null;
@@ -106,47 +106,37 @@ export class FlipbookEngine {
 
       contentEl.appendChild(imgEl);
 
-      // 2. Aksen Washi Tape Scrapbook di Sudut Atas
-      const washiTape = document.createElement('div');
-      const isEvenPage = pageItem.pageNumber % 2 === 0;
-      const tapeColorClass = isEvenPage ? 'bg-dream-pink' : 'bg-dream-mint';
-      const tapeRotateClass = isEvenPage ? '-rotate-3' : 'rotate-3';
-      const tapePositionClass = isEvenPage ? 'top-2 left-3 sm:left-5' : 'top-2 right-3 sm:right-5';
-      
-      washiTape.className = `absolute ${tapePositionClass} ${tapeColorClass} ${tapeRotateClass} w-16 sm:w-20 h-4 border border-dream-dark/40 shadow-sm opacity-90 z-20 pointer-events-none`;
-      washiTape.setAttribute('aria-hidden', 'true');
-      contentEl.appendChild(washiTape);
-
-      // 3. Stiker Cap Stempel Digital Halus (BEM KMFP UNPAD • OFFICIAL BLUEPRINT)
-      const stampEl = document.createElement('div');
-      const stampPositionClass = isEvenPage ? 'top-3 right-4 rotate-2' : 'top-3 left-4 -rotate-2';
-      stampEl.className = `absolute ${stampPositionClass} px-2 py-0.5 rounded border border-dashed border-dream-dark/50 text-[8px] sm:text-[9px] font-mono font-bold text-dream-dark/70 tracking-widest uppercase bg-white/40 pointer-events-none z-20`;
-      stampEl.textContent = 'BEM KMFP UNPAD • OFFICIAL BLUEPRINT';
-      stampEl.setAttribute('aria-hidden', 'true');
-      contentEl.appendChild(stampEl);
-
-      // 4. Tekstur Garis Lipatan Tengah (Spine Crease)
-      const spineCrease = document.createElement('div');
-      if (isEvenPage) {
-        // Halaman kiri saat spread: bayangan halus di sisi kanan lembaran
-        spineCrease.className = 'absolute top-0 bottom-0 right-0 w-6 pointer-events-none z-10';
-        spineCrease.style.background = 'linear-gradient(to right, transparent, rgba(45, 35, 46, 0.12))';
-      } else {
-        // Halaman kanan saat spread: bayangan halus di sisi kiri lembaran
-        spineCrease.className = 'absolute top-0 bottom-0 left-0 w-6 pointer-events-none z-10';
-        spineCrease.style.background = 'linear-gradient(to left, transparent, rgba(45, 35, 46, 0.12))';
+      // Listener pemuatan citra kover utama untuk sinkronisasi render presisi
+      if (index === 0) {
+        const handleCoverLoad = () => {
+          window.requestAnimationFrame(() => {
+            this.update();
+            window.dispatchEvent(new Event('resize'));
+          });
+        };
+        if (imgEl.complete) {
+          handleCoverLoad();
+        } else {
+          imgEl.addEventListener('load', handleCoverLoad, { once: true });
+        }
       }
-      spineCrease.setAttribute('aria-hidden', 'true');
-      contentEl.appendChild(spineCrease);
 
-      // 5. Stiker Pin Penomoran Halaman Otomatis (Hal. 01 - Hal. 24) di Pojok Kiri Bawah
-      const pageNumberPin = document.createElement('div');
-      pageNumberPin.className =
-        'absolute bottom-3 left-4 z-20 px-2 py-0.5 rounded-lg bg-dream-yellow border-[1.5px] border-dream-dark shadow-[2px_2px_0px_#2D232E] text-xs font-bold font-sans text-dream-dark pointer-events-none';
-      const paddedNum = String(pageItem.pageNumber).padStart(2, '0');
-      pageNumberPin.textContent = `Hal. ${paddedNum}`;
-      pageNumberPin.setAttribute('aria-label', `Halaman ${pageItem.pageNumber}`);
-      contentEl.appendChild(pageNumberPin);
+      // 2. Tekstur Garis Lipatan Tengah (Spine Crease) - khusus halaman isi saat spread (tidak pada cover depan/belakang)
+      const isEvenPage = pageItem.pageNumber % 2 === 0;
+      if (!pageItem.isCover) {
+        const spineCrease = document.createElement('div');
+        if (isEvenPage) {
+          // Halaman kiri saat spread: bayangan halus di sisi kanan lembaran
+          spineCrease.className = 'absolute top-0 bottom-0 right-0 w-6 pointer-events-none z-10';
+          spineCrease.style.background = 'linear-gradient(to right, transparent, rgba(45, 35, 46, 0.08))';
+        } else {
+          // Halaman kanan saat spread: bayangan halus di sisi kiri lembaran
+          spineCrease.className = 'absolute top-0 bottom-0 left-0 w-6 pointer-events-none z-10';
+          spineCrease.style.background = 'linear-gradient(to left, transparent, rgba(45, 35, 46, 0.08))';
+        }
+        spineCrease.setAttribute('aria-hidden', 'true');
+        contentEl.appendChild(spineCrease);
+      }
 
       pageEl.appendChild(contentEl);
       this.containerElement!.appendChild(pageEl);
@@ -182,6 +172,9 @@ export class FlipbookEngine {
     // Muat elemen halaman HTML ke engine
     const pageElements = this.containerElement.querySelectorAll<HTMLElement>('.st-page');
     this.pageFlipInstance.loadFromHTML(pageElements);
+
+    // Kunci pembaruan render awal StPageFlip secara langsung
+    this.pageFlipInstance.update();
   }
 
   /**

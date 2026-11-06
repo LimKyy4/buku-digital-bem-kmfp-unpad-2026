@@ -46,6 +46,6 @@ export const defaultBookConfig: FlipbookConfigOptions = {
   disableFlipByClick: false,
   clickEventForward: true,
   useMouseEvents: true,
-  autoSize: true,
+  autoSize: false,
   startZIndex: 0
 };

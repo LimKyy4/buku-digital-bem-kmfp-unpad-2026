@@ -19,7 +19,7 @@
   <!-- Resource Preload: Font WOFF2 & Citra Cover Utama -->
   <link rel="preload" href="/assets/fonts/syne-700.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href="/assets/halaman/halaman-cover.jfif" as="image" type="image/jpeg" />
+  <link rel="preload" href="/assets/halaman/halaman-cover-utama.jfif" as="image" type="image/jpeg" />
 
   <!-- Open Graph Protocol (Facebook, WhatsApp, LinkedIn) -->
   <meta property="og:site_name" content="Biro Keuangan BEM KMFP UNPAD" />
@@ -28,8 +28,8 @@
   <meta property="og:url" content="/" />
   <meta property="og:title" content="Grand Design Biro Keuangan BEM KMFP UNPAD 2026 - Cetak Biru Tata Kelola &amp; Regulasi Finansial" />
   <meta property="og:description" content="Buku panduan resmi tata kelola keuangan, transparansi anggaran, alur birokrasi SIAT Dekanat, dan standarisasi SOP Biro Keuangan BEM KMFP UNPAD 2026." />
-  <meta property="og:image" content="/assets/halaman/halaman-cover.jfif" />
-  <meta property="og:image:secure_url" content="/assets/halaman/halaman-cover.jfif" />
+  <meta property="og:image" content="/assets/halaman/halaman-cover-utama.jfif" />
+  <meta property="og:image:secure_url" content="/assets/halaman/halaman-cover-utama.jfif" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="2400" />
   <meta property="og:image:height" content="1792" />
@@ -39,7 +39,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Grand Design Biro Keuangan BEM KMFP UNPAD 2026 - Cetak Biru Tata Kelola &amp; Regulasi Finansial" />
   <meta name="twitter:description" content="Buku panduan resmi tata kelola keuangan, transparansi anggaran, alur birokrasi SIAT Dekanat, dan standarisasi SOP Biro Keuangan BEM KMFP UNPAD 2026." />
-  <meta name="twitter:image" content="/assets/halaman/halaman-cover.jfif" />
+  <meta name="twitter:image" content="/assets/halaman/halaman-cover-utama.jfif" />
   <meta name="twitter:image:alt" content="Cover Grand Design Biro Keuangan BEM KMFP UNPAD 2026" />
 
   <!-- Structured Data JSON-LD Schema -->
@@ -58,7 +58,7 @@
       "name": "BEM KMFP Universitas Padjadjaran"
     },
     "inLanguage": "id",
-    "numberOfPages": 24,
+    "numberOfPages": 23,
     "description": "Cetak biru tata kelola kas terpusat, penganggaran SIAT, dan akuntabilitas finansial lembaga mahasiswa."
   }
   </script>
@@ -111,12 +111,15 @@
     </button>
 
     <!-- Kontainer Lembaran StPageFlip & Lapisan Hotspot -->
-    <div class="relative flex items-center justify-center max-w-full max-h-full">
+    <div id="book-stage" class="book-stage-container relative flex items-center justify-center max-w-full max-h-full">
       <!-- StPageFlip Container -->
       <div id="book-container" class="st-flipbook-container" role="document" aria-label="Lembaran Buku Digital"></div>
       
       <!-- Interactive Hotspot Overlay Layer -->
       <div id="hotspots-layer" class="hotspot-overlay-layer" aria-label="Lapisan Tautan Interaktif"></div>
+
+      <!-- Lapisan Penomoran Halaman Luar (Di Luar Kotak Lembaran) -->
+      <div id="page-numbers-layer" class="page-numbers-overlay-layer" aria-label="Penomoran Halaman Luar"></div>
     </div>
   </main>
 

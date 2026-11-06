@@ -45,7 +45,7 @@ async function testEngineRuntime() {
     throw new Error('Kalkulasi desktop bounds menghasilkan dimensi tidak valid');
   }
   const desktopRatio = desktopBounds.width / desktopBounds.height;
-  const expectedDesktopRatio = (4 / 3) * 2; // ~2.667
+  const expectedDesktopRatio = rm.getMode() === 'spread' ? (4 / 3) * 2 : 4 / 3;
   if (Math.abs(desktopRatio - expectedDesktopRatio) > 0.05) {
     throw new Error(`Rasio spread desktop tidak sesuai: ${desktopRatio} vs ${expectedDesktopRatio}`);
   }

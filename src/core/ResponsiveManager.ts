@@ -136,19 +136,19 @@ export class ResponsiveManager {
     let maxAvailH: number;
 
     if (isFullscreen && this.currentMode === 'spread') {
-      // Mode Layar Penuh (Dua Halaman Berdampingan): Mengisi 85% - 90% viewport
-      const horizPadding = 32;
-      const vertPadding = 24;
+      // Mode Layar Penuh (Dua Halaman Berdampingan): Mengisi 85% - 90% viewport dengan margin aman
+      const horizPadding = 48;
+      const vertPadding = 64;
 
-      maxAvailW = Math.max(300, Math.min(containerWidth - horizPadding, vpW * 0.92));
-      maxAvailH = Math.max(220, Math.min(containerHeight - vertPadding, vpH * 0.88));
+      maxAvailW = Math.max(300, Math.min(containerWidth - horizPadding, vpW * 0.90));
+      maxAvailH = Math.max(220, Math.min(containerHeight - vertPadding, vpH * 0.82));
     } else {
-      // Mode Biasa / Windowed (Halaman Tunggal): Terpusat, skala besar, mudah dibaca
-      const horizPadding = 24;
-      const vertPadding = 48; // Ruang aman di atas & bawah untuk navbar dan dock melayang
+      // Mode Biasa / Windowed (Halaman Tunggal): Terpusat, skala proporsional, bebas tumpang tindih
+      const horizPadding = 32;
+      const vertPadding = 72; // Ruang aman di atas & bawah untuk navbar dan dock melayang
 
       maxAvailW = Math.max(280, Math.min(containerWidth - horizPadding, vpW * 0.78));
-      maxAvailH = Math.max(220, Math.min(containerHeight - vertPadding, vpH * 0.76));
+      maxAvailH = Math.max(220, Math.min(containerHeight - vertPadding, vpH * 0.73));
     }
 
     // Rasio target:
@@ -169,12 +169,20 @@ export class ResponsiveManager {
       calculatedHeight = calculatedWidth / targetRatio;
     }
 
-    const singlePageWidth = this.currentMode === 'spread' ? calculatedWidth / 2 : calculatedWidth;
+    // Kunci kalkulasi dimensi agar proporsi rasio saling mengikat presisi (anti-letterboxing)
+    const finalWidth = Math.round(calculatedWidth);
+    let finalHeight = Math.round(finalWidth / targetRatio);
+
+    if (finalHeight > maxAvailH) {
+      finalHeight = Math.round(maxAvailH);
+    }
+
+    const singlePageWidth = this.currentMode === 'spread' ? finalWidth / 2 : finalWidth;
     const scale = singlePageWidth / BASE_PAGE_WIDTH;
 
     return {
-      width: Math.round(calculatedWidth),
-      height: Math.round(calculatedHeight),
+      width: finalWidth,
+      height: finalHeight,
       mode: this.currentMode,
       scale: Math.max(0.2, Math.min(2.5, scale))
     };

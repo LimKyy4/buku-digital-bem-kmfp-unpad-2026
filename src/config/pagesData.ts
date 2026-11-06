@@ -8,33 +8,20 @@ import type {
 /**
  * Daftar Titik Tautan Interaktif (Hotspots)
  * Koordinat posisi berbasis persentase relatif terhadap lembaran kanvas 4:3
- * Halaman 22: Master Data & Timeline (QR Code dan Tautan bit.ly/MASTERDATABIROKEUANGAN)
- * Halaman 23: Template RAB (QR Code dan Berkas Unduhan Rencana Anggaran Biaya)
+ * Halaman 22: Template RAB (QR Code dan Berkas Unduhan Rencana Anggaran Biaya & Master Data bit.ly/MASTERDATABIROKEUANGAN)
  */
 export const hotspotCoordinates: HotspotItem[] = [
   {
-    id: 'hotspot-masterdata-p22',
+    id: 'hotspot-rab-template-p22',
     pageNumber: 22,
-    interactionType: 'external-tab',
-    topPercent: 26.0,
-    leftPercent: 28.0,
-    widthPercent: 44.0,
-    heightPercent: 54.0,
-    targetUrl: 'https://bit.ly/MASTERDATABIROKEUANGAN',
-    accessibilityLabel: 'Buka Portal Master Data dan Timeline Biro Keuangan',
-    tooltipText: 'Buka Master Data & Timeline (bit.ly/MASTERDATABIROKEUANGAN)'
-  },
-  {
-    id: 'hotspot-rab-template-p23',
-    pageNumber: 23,
     interactionType: 'download',
-    topPercent: 26.0,
+    topPercent: 25.0,
     leftPercent: 28.0,
     widthPercent: 44.0,
-    heightPercent: 54.0,
-    targetUrl: 'https://bit.ly/MASTERDATABIROKEUANGAN',
+    heightPercent: 55.0,
+    targetUrl: 'https://bit.ly/TEMPLATERABBEMKMFP26',
     accessibilityLabel: 'Unduh Template Rencana Anggaran Biaya (RAB)',
-    tooltipText: 'Unduh Template RAB (bit.ly/MASTERDATABIROKEUANGAN)'
+    tooltipText: 'Unduh Template RAB (bit.ly/TEMPLATERABBEMKMFP26)'
   }
 ];
 
@@ -42,13 +29,13 @@ export const hotspotsData = hotspotCoordinates;
 
 /**
  * Pembagian 5 Bagian Navigasi Resmi Buku Digital
- * Grand Design Biro Keuangan BEM KMFP UNPAD 2026
+ * Grand Design Biro Keuangan BEM KMFP UNPAD 2026 (23 Halaman)
  *
  * - Bagian I: Profil Organisasi (Halaman 1 - 3)
  * - Bagian II: Fondasi & Analisis Strategis (Halaman 4 - 11)
  * - Bagian III: Program Kerja Utama (Halaman 12 - 14, Halaman 21)
  * - Bagian IV: Regulasi, Berkas, & Alur Keuangan (Halaman 15 - 20)
- * - Bagian V: Dokumen Pendukung & Penutup (Halaman 22 - 24)
+ * - Bagian V: Dokumen Pendukung & Penutup (Halaman 22 - 23)
  */
 export const chapterSections: ChapterItem[] = [
   {
@@ -89,24 +76,24 @@ export const chapterSections: ChapterItem[] = [
     endPage: 20,
     pageNumbers: [15, 16, 17, 18, 19, 20],
     pageCount: 6,
-    description: 'Berkas mandatori SIAT Dekanat, diagram alur berkas pencairan SIAT, ketentuan lampiran & pajak, alur permohonan dana, alur reimburse, dan peminjaman dana.'
+    description: 'Berkas mandatori SIAT Dekanat, diagram alur berkas pencairan SIAT, ketentuan lampiran & pajak, alur permohonan dana, alur reimburse, dan alur peminjaman dana.'
   },
   {
     id: 'bagian-5',
     chapterNumber: 5,
     title: 'Bagian V: Dokumen Pendukung & Penutup',
     startPage: 22,
-    endPage: 24,
-    pageNumbers: [22, 23, 24],
-    pageCount: 3,
-    description: 'Portal arsip digital bit.ly/MASTERDATABIROKEUANGAN, timeline 2026, template RAB baku, dan sampul belakang penutup.'
+    endPage: 23,
+    pageNumbers: [22, 23],
+    pageCount: 2,
+    description: 'Template Rencana Anggaran Biaya (RAB) baku dengan QR code portal bit.ly/MASTERDATABIROKEUANGAN dan sampul belakang penutup (Thank You).'
   }
 ];
 
 export const chaptersData = chapterSections;
 
 /**
- * Data Model 24 Halaman Resmi
+ * Data Model 23 Halaman Resmi
  * Sumber berkas foto 4:3 (.jfif) langsung dari direktori assets/halaman/
  */
 export const pagesData: PageItem[] = [
@@ -114,8 +101,8 @@ export const pagesData: PageItem[] = [
     pageNumber: 1,
     zeroIndex: 0,
     title: 'Cover Depan',
-    subtitle: 'Grand Design Biro Keuangan BEM KMFP UNPAD 2026',
-    imagePath: './assets/halaman/halaman-cover.jfif',
+    subtitle: 'Beyond the Numbers - BEM KMFP UNPAD 2026',
+    imagePath: './assets/halaman/halaman-cover-utama.jfif',
     pageType: 'front-cover',
     chapterId: 'bagian-1',
     chapterTitle: 'Bagian I: Profil Organisasi',
@@ -130,7 +117,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 1,
     title: 'Profil Pimpinan',
     subtitle: 'Kepala Biro & Wakil Kepala Biro Keuangan 2026',
-    imagePath: './assets/halaman/halaman-biro-keuangan.jfif',
+    imagePath: './assets/halaman/halaman-kepala-biro.jfif',
     pageType: 'content',
     chapterId: 'bagian-1',
     chapterTitle: 'Bagian I: Profil Organisasi',
@@ -145,7 +132,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 2,
     title: 'Jajaran Staf',
     subtitle: 'Struktur dan Anggota Biro Keuangan 2026',
-    imagePath: './assets/halaman/halaman-staff-biro-keuangan.jfif',
+    imagePath: './assets/halaman/halaman-staff-biro.jfif',
     pageType: 'content',
     chapterId: 'bagian-1',
     chapterTitle: 'Bagian I: Profil Organisasi',
@@ -174,8 +161,8 @@ export const pagesData: PageItem[] = [
     pageNumber: 5,
     zeroIndex: 4,
     title: 'The Golden Circle (Konsep)',
-    subtitle: 'Diagram Konsentris Simon Sinek',
-    imagePath: './assets/halaman/halaman-the-golden-tiket.jfif',
+    subtitle: 'Start with Why - Diagram Konsentris Simon Sinek',
+    imagePath: './assets/halaman/halaman-the-golden.jfif',
     pageType: 'content',
     chapterId: 'bagian-2',
     chapterTitle: 'Bagian II: Fondasi & Analisis Strategis',
@@ -219,7 +206,7 @@ export const pagesData: PageItem[] = [
     pageNumber: 8,
     zeroIndex: 7,
     title: 'Deskripsi Biro Keuangan',
-    subtitle: 'Gambaran Umum dan Peran Finansial Lembaga',
+    subtitle: 'Tugas & Tanggung Jawab Pengelolaan Finansial',
     imagePath: './assets/halaman/halaman-deskripsi-bikeu.jfif',
     pageType: 'content',
     chapterId: 'bagian-2',
@@ -235,7 +222,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 8,
     title: 'Tugas Pokok dan Fungsi',
     subtitle: 'Enam Pilar Tupoksi Biro Keuangan',
-    imagePath: './assets/halaman/halaman-tugas-pokok-fungsi.jfif',
+    imagePath: './assets/halaman/halaman-tugas-pokok.jfif',
     pageType: 'content',
     chapterId: 'bagian-2',
     chapterTitle: 'Bagian II: Fondasi & Analisis Strategis',
@@ -249,8 +236,8 @@ export const pagesData: PageItem[] = [
     pageNumber: 10,
     zeroIndex: 9,
     title: 'Analisis SWOT & Evaluasi',
-    subtitle: 'Pemetaan Strategis dan Solusi Finansial',
-    imagePath: './assets/halaman/halaman-analisis-swot-evaluasi.jfif',
+    subtitle: 'Pemetaan Strategis, Evaluasi, dan Solusi Finansial',
+    imagePath: './assets/halaman/halaman-analisis-swot.jfif',
     pageType: 'content',
     chapterId: 'bagian-2',
     chapterTitle: 'Bagian II: Fondasi & Analisis Strategis',
@@ -264,7 +251,7 @@ export const pagesData: PageItem[] = [
     pageNumber: 11,
     zeroIndex: 10,
     title: '4 Pilar Mimpi Biro',
-    subtitle: 'Aspirasi Finansial Berkelanjutan',
+    subtitle: 'Aspirasi Finansial Berkelanjutan Biro Keuangan',
     imagePath: './assets/halaman/halaman-mimpi-biro.jfif',
     pageType: 'content',
     chapterId: 'bagian-2',
@@ -295,7 +282,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 12,
     title: 'Proker 1: Manajemen Keuangan (1)',
     subtitle: 'Tata Kelola Kas Besar dan Administrasi - Bagian 1',
-    imagePath: './assets/halaman/halaman-manajemen.jfif',
+    imagePath: './assets/halaman/manajemen-tata-kelola.jfif',
     pageType: 'content',
     chapterId: 'bagian-3',
     chapterTitle: 'Bagian III: Program Kerja Utama',
@@ -310,7 +297,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 13,
     title: 'Proker 1: Manajemen Keuangan (2)',
     subtitle: 'Tata Kelola Kas Besar dan Administrasi - Bagian 2',
-    imagePath: './assets/halaman/halaman-manajemen-2.jfif',
+    imagePath: './assets/halaman/halaman-manajemen-tata-kelola.jfif',
     pageType: 'content',
     chapterId: 'bagian-3',
     chapterTitle: 'Bagian III: Program Kerja Utama',
@@ -324,8 +311,8 @@ export const pagesData: PageItem[] = [
     pageNumber: 15,
     zeroIndex: 14,
     title: 'Berkas Pengajuan SIAT',
-    subtitle: 'Kelengkapan 5 Dokumen Mandatori Pengajuan Dana Dekanat',
-    imagePath: './assets/halaman/halaman-berkas-pengajuan.jfif',
+    subtitle: 'Kelengkapan Dokumen Mandatori Pengajuan Dana Dekanat',
+    imagePath: './assets/halaman/halaman-berkas-pengajuan-dana.jfif',
     pageType: 'content',
     chapterId: 'bagian-4',
     chapterTitle: 'Bagian IV: Regulasi, Berkas, & Alur Keuangan',
@@ -340,7 +327,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 15,
     title: 'Alur Berkas SIAT',
     subtitle: 'Diagram Flowchart Pengajuan & Pencairan SIAT',
-    imagePath: './assets/halaman/halaman-alur-berkas.jfif',
+    imagePath: './assets/halaman/halaman-alur-berkas-pengajuan.jfif',
     pageType: 'content',
     chapterId: 'bagian-4',
     chapterTitle: 'Bagian IV: Regulasi, Berkas, & Alur Keuangan',
@@ -354,7 +341,7 @@ export const pagesData: PageItem[] = [
     pageNumber: 17,
     zeroIndex: 16,
     title: 'Ketentuan Lampiran & Pajak',
-    subtitle: 'Standarisasi Lampiran Dekanat dan Pajak/Sewa',
+    subtitle: 'Standarisasi Lampiran Dekanat dan Ketentuan Pajak',
     imagePath: './assets/halaman/halaman-lampiran-dekanat.jfif',
     pageType: 'content',
     chapterId: 'bagian-4',
@@ -370,7 +357,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 17,
     title: 'Alur Permohonan Dana',
     subtitle: 'Diagram Alur Permohonan Dana Internal Organisasi',
-    imagePath: './assets/halaman/halaman-alur-permohonan.jfif',
+    imagePath: './assets/halaman/halaman-alur-permohonan-dana.jfif',
     pageType: 'content',
     chapterId: 'bagian-4',
     chapterTitle: 'Bagian IV: Regulasi, Berkas, & Alur Keuangan',
@@ -399,8 +386,8 @@ export const pagesData: PageItem[] = [
     pageNumber: 20,
     zeroIndex: 19,
     title: 'Alur Peminjaman Dana',
-    subtitle: 'SOP dan Syarat Peminjaman Kas Organisasi',
-    imagePath: './assets/halaman/halaman-alur-peminjaman.jfif',
+    subtitle: 'SOP dan 4 Step Peminjaman Kas Organisasi',
+    imagePath: './assets/halaman/alur-peminjaman-dana.jfif',
     pageType: 'content',
     chapterId: 'bagian-4',
     chapterTitle: 'Bagian IV: Regulasi, Berkas, & Alur Keuangan',
@@ -415,7 +402,7 @@ export const pagesData: PageItem[] = [
     zeroIndex: 20,
     title: 'Proker 2: Sosialisasi Bendahara',
     subtitle: 'Penyelarasan Administrasi Finansial Departemen',
-    imagePath: './assets/halaman/halaman-sosialisasi.jfif',
+    imagePath: './assets/halaman/halaman-sosialisasi-bendahara.jfif',
     pageType: 'content',
     chapterId: 'bagian-3',
     chapterTitle: 'Bagian III: Program Kerja Utama',
@@ -428,14 +415,14 @@ export const pagesData: PageItem[] = [
   {
     pageNumber: 22,
     zeroIndex: 21,
-    title: 'Master Data & Timeline',
-    subtitle: 'Portal Akses Berkas bit.ly/MASTERDATABIROKEUANGAN',
-    imagePath: './assets/halaman/halaman-master-data.jfif',
+    title: 'Template RAB',
+    subtitle: 'Format Rencana Anggaran Biaya Baku & Portal bit.ly/MASTERDATABIROKEUANGAN',
+    imagePath: './assets/halaman/halaman-template-rab.jfif',
     pageType: 'content',
     chapterId: 'bagian-5',
     chapterTitle: 'Bagian V: Dokumen Pendukung & Penutup',
     hotspots: [hotspotCoordinates[0]],
-    altText: 'Master Data & Timeline Biro Keuangan 2026',
+    altText: 'Template RAB Baku Biro Keuangan 2026',
     isCover: false,
     hasHotspot: true,
     chapter: 'Bagian V: Dokumen Pendukung & Penutup'
@@ -443,29 +430,14 @@ export const pagesData: PageItem[] = [
   {
     pageNumber: 23,
     zeroIndex: 22,
-    title: 'Template RAB',
-    subtitle: 'Format Rencana Anggaran Biaya Baku 8 Kolom',
-    imagePath: './assets/halaman/halaman-template-rab.jfif',
-    pageType: 'content',
-    chapterId: 'bagian-5',
-    chapterTitle: 'Bagian V: Dokumen Pendukung & Penutup',
-    hotspots: [hotspotCoordinates[1]],
-    altText: 'Template RAB Baku Biro Keuangan 2026',
-    isCover: false,
-    hasHotspot: true,
-    chapter: 'Bagian V: Dokumen Pendukung & Penutup'
-  },
-  {
-    pageNumber: 24,
-    zeroIndex: 23,
     title: 'Penutup (Terima Kasih)',
-    subtitle: 'Sampul Belakang Kabinet Karya Nyata 2026',
+    subtitle: 'Sampul Belakang / Thank You Biro Keuangan 2026',
     imagePath: './assets/halaman/halaman-thank-you.jfif',
     pageType: 'back-cover',
     chapterId: 'bagian-5',
     chapterTitle: 'Bagian V: Dokumen Pendukung & Penutup',
     hotspots: [],
-    altText: 'Sampul Belakang / Penutup Grand Design 2026',
+    altText: 'Sampul Belakang / Penutup Thank You Grand Design 2026',
     isCover: true,
     hasHotspot: false,
     chapter: 'Bagian V: Dokumen Pendukung & Penutup'
@@ -473,14 +445,14 @@ export const pagesData: PageItem[] = [
 ];
 
 /**
- * Mengambil metadata halaman berdasarkan nomor halaman (1-24)
+ * Mengambil metadata halaman berdasarkan nomor halaman (1-23)
  */
 export function getPageByNumber(pageNumber: number): PageItem | undefined {
   return pagesData.find((p: PageItem) => p.pageNumber === pageNumber);
 }
 
 /**
- * Mengambil metadata halaman berdasarkan zero-based index (0-23)
+ * Mengambil metadata halaman berdasarkan zero-based index (0-22)
  */
 export function getPageByIndex(zeroIndex: number): PageItem | undefined {
   return pagesData[zeroIndex];

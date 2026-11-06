@@ -1,5 +1,5 @@
 import type { ChapterItem } from '../types';
-import { chapterSections } from '../config/pagesData';
+import { chapterSections, getTotalPages } from '../config/pagesData';
 
 /**
  * Komponen Laci Samping Kiri Daftar Isi (Off-Canvas Left Sidebar Drawer)
@@ -88,7 +88,7 @@ export class TableOfContents {
                   DAFTAR ISI
                 </h2>
                 <span class="px-1.5 py-0.2 rounded-full bg-dream-mint text-[9px] font-extrabold border border-dream-dark text-dream-dark">
-                  24 HAL
+                  ${getTotalPages()} HAL
                 </span>
               </div>
               <p class="text-[11px] font-sans font-semibold text-dream-dark/70 leading-tight">
